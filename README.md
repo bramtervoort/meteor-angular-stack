@@ -1,4 +1,4 @@
-meteor-angular-stack
+Meteor Angular Stack
 ====================
 
-A meteor package that enables you to use angularjs together with meteor
+A meteor package that enables you to use Angular together with meteor.
