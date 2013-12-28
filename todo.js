@@ -6,18 +6,20 @@ if (Meteor.isServer) {
   WebApp.addHtmlAttributeHook(function (request) {
     return 'ng-app="todoapp"';
   });
-  
-  Meteor.startup(function () {
-    // code to run on server at startup
-  });
 }
 
 // client
 if (Meteor.isClient) {
+  // the angular module of this app
   var app = angular.module('todoapp', []);
+  
+  // controller for a list of todo's
   app.controller('TodoListCtrl', ['$scope', 
                          function ($scope) {
-						 
+	// a description for a potential todo
+	$scope.description = "";
+	
+    // Make sure to keep the list of todo's uptodate
     Deps.autorun(function (computation) {
 	  $scope.todos = Todo.find().fetch();
 	  
@@ -26,11 +28,18 @@ if (Meteor.isClient) {
 	  }
 	});
 	
+	// remove a todo from the list
+	// called with an existing id
 	$scope.remove = function (id) {
 	  Todo.remove({_id: id});
 	};
 	
-	$scope.description = "";
+	// set the done bit of a todo to some value
+	$scope.done = function (id, val) {
+	  Todo.update({_id: id}, {$set: {done: val}});
+	};
+	
+	// add the new todo
 	$scope.add = function () {
 	  Todo.insert({
 	    description: $scope.description, 
