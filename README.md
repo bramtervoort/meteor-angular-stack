@@ -7,8 +7,8 @@ This is the first test app trying if it works as I expected. Its a short
 todo example app, everyone can add stuf and check of stuff. But it works
 in sink on all devices.
 
-blog: http://bram-tervoort.nl/2013/12/i-started-my-first-meteor-app/
-app: http://bramtervoort-todo.meteor.com/
+ - blog: http://bram-tervoort.nl/2013/12/i-started-my-first-meteor-app/
+ - app: http://bramtervoort-todo.meteor.com/
 
 Quick steps to get angular working
 ----------------------------------
