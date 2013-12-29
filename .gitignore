@@ -3,3 +3,4 @@
 /smart.lock
 
 /packages
+.build*
