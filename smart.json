@@ -1,6 +1,6 @@
 {
   "name": "angular-stack",
-  "description": "Super cool package with dependencies",
+  "description": "Use angular within your meteor project",
   "homepage": "http://bram-tervoort.nl",
   "author": "Bram Tervoort",
   "version": "0.1.0",
