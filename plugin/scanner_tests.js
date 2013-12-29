@@ -1,4 +1,4 @@
-Tinytest.add("templating - html scanner", function (test) {
+Tinytest.add("AngularStack - templating - html scanner", function (test) {
   var testInString = function(actualStr, wantedContents) {
     if (actualStr.indexOf(wantedContents) >= 0)
       test.ok();
@@ -41,30 +41,27 @@ Tinytest.add("templating - html scanner", function (test) {
 
   // body all on one line
   checkResults(
-    html_scanner.scan("<body>Hello</body>"),
-    BODY_PREAMBLE+'Package.handlebars.Handlebars.json_ast_to_func(["Hello"])'+BODY_POSTAMBLE);
+    html_scanner.scan("<body>Hello</body>"), "Hello" );
 
   // multi-line body, contents trimmed
   checkResults(
-    html_scanner.scan("\n\n\n<body>\n\nHello\n\n</body>\n\n\n"),
-    BODY_PREAMBLE+'Package.handlebars.Handlebars.json_ast_to_func(["Hello"])'+BODY_POSTAMBLE);
+    html_scanner.scan("\n\n\n<body>\n\nHello\n\n</body>\n\n\n"),"\n\nHello\n\n");
 
   // same as previous, but with various HTML comments
   checkResults(
     html_scanner.scan("\n<!--\n\nfoo\n-->\n<!-- -->\n"+
-                      "<body>\n\nHello\n\n</body>\n\n<!----\n>\n\n"),
-    BODY_PREAMBLE+'Package.handlebars.Handlebars.json_ast_to_func(["Hello"])'+BODY_POSTAMBLE);
+                      "<body>\n\nHello\n\n</body>\n\n<!----\n>\n\n"),"\n\nHello\n\n");
 
   // head and body
   checkResults(
     html_scanner.scan("<head>\n<title>Hello</title>\n</head>\n\n<body>World</body>\n\n"),
-    BODY_PREAMBLE+'Package.handlebars.Handlebars.json_ast_to_func(["World"])'+BODY_POSTAMBLE,
+	"World",
     "<title>Hello</title>");
 
   // head and body with tag whitespace
   checkResults(
     html_scanner.scan("<head\n>\n<title>Hello</title>\n</head  >\n\n<body>World</body\n\n>\n\n"),
-    BODY_PREAMBLE+'Package.handlebars.Handlebars.json_ast_to_func(["World"])'+BODY_POSTAMBLE,
+	"World",
     "<title>Hello</title>");
 
   // head, body, and template
