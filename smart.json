@@ -1,0 +1,8 @@
+{
+  "name": "angular-stack",
+  "description": "Super cool package with dependencies",
+  "homepage": "http://bram-tervoort.nl",
+  "author": "Bram Tervoort",
+  "version": "0.1.0",
+  "git": "https://github.com/bramtervoort/meteor-angular-stack.git"
+}
