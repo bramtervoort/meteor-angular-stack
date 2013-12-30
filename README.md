@@ -1,5 +1,6 @@
 meteor-angular-stack
 ====================
+[![Build Status](https://travis-ci.org/bramtervoort/meteor-angular-stack.png?branch=develop)](https://travis-ci.org/bramtervoort/meteor-angular-stack)
 
 A meteor package that enables you to use Angular together with Meteor.
 
