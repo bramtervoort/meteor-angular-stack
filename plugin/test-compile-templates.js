@@ -13,8 +13,7 @@ Tinytest.add("AngularStack - templating - ahtm compiler", function (test) {
 	    console.log('error called', error);
 	  },
 	  appendDocument: function (section) {
-	    var f = this.expects.shift();
-		f(section);
+	    this.expects.shift()(section);
 	  }
     };
   };
