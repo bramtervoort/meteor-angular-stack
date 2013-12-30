@@ -1,10 +1,9 @@
 meteor-angular-stack
 ====================
-[![Build Status](https://travis-ci.org/bramtervoort/meteor-angular-stack.png?branch=develop)](https://travis-ci.org/bramtervoort/meteor-angular-stack)
+develop: [![Build Status](https://travis-ci.org/bramtervoort/meteor-angular-stack.png?branch=develop)](https://travis-ci.org/bramtervoort/meteor-angular-stack)
+master: [![Build Status](https://travis-ci.org/bramtervoort/meteor-angular-stack.png?branch=master)](https://travis-ci.org/bramtervoort/meteor-angular-stack)
 
 A meteor package that enables you to use Angular together with Meteor.
-
-[![Build Status](https://travis-ci.org/bramtervoort/meteor-angular-stack.png?branch=master)](https://travis-ci.org/bramtervoort/meteor-angular-stack)
 
 Its not yet finished so its not yet in atmosphere you can however try it.
 Just download the package to the packages folder and install it using atmosphere.
