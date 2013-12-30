@@ -22,90 +22,82 @@ Tinytest.add("AngularStack - templating - html scanner", function (test) {
     test.fail("Parse error didn't throw exception");
   };
 
-  var BODY_PREAMBLE = "Meteor.startup(function(){" +
-        "document.body.appendChild(Spark.render(" +
-        "Template.__define__(null,";
-  var BODY_POSTAMBLE = ")));});";
+  var templatetify = function (name, body) {
+    return '<script type="text/ng-template" name="' + name + '">'
+	  + body + '</script>';
+  };
   var TEMPLATE_PREAMBLE = "Template.__define__(";
   var TEMPLATE_POSTAMBLE = ");\n";
 
-  var checkResults = function(results, expectJs, expectHead) {
-    test.equal(results.body, '');
-    test.equal(results.js, expectJs || '');
-    test.equal(results.head, expectHead || '');
+  var checkResults = function(results, expectJs, expectHead, expectBody) {
+    test.equal(results.body, expectBody || '', 'body not what it should be');
+    test.equal(results.js, expectJs || '', 'js not what it should be');
+    test.equal(results.head, expectHead || '', 'head not what it should be');
   };
 
   checkError(function() {
     return html_scanner.scan("asdf");
   }, "formatting in HTML template", 1);
-
   // body all on one line
   checkResults(
-    html_scanner.scan("<body>Hello</body>"), "Hello" );
+    html_scanner.scan("<body>Hello</body>"), '', '', "Hello" );
 
   // multi-line body, contents trimmed
   checkResults(
-    html_scanner.scan("\n\n\n<body>\n\nHello\n\n</body>\n\n\n"),"\n\nHello\n\n");
+    html_scanner.scan("\n\n\n<body>\n\nHello\n\n</body>\n\n\n"),'', '', "Hello");
+
 
   // same as previous, but with various HTML comments
   checkResults(
     html_scanner.scan("\n<!--\n\nfoo\n-->\n<!-- -->\n"+
-                      "<body>\n\nHello\n\n</body>\n\n<!----\n>\n\n"),"\n\nHello\n\n");
+                      "<body>\n\nHello\n\n</body>\n\n<!----\n>\n\n"),'', '', "Hello");
 
   // head and body
   checkResults(
-    html_scanner.scan("<head>\n<title>Hello</title>\n</head>\n\n<body>World</body>\n\n"),
-	"World",
-    "<title>Hello</title>");
+    html_scanner.scan("<head>\n<title>Hello</title>\n</head>\n\n<body>World</body>\n\n"), '',
+    "<title>Hello</title>",
+	"World");
 
   // head and body with tag whitespace
   checkResults(
-    html_scanner.scan("<head\n>\n<title>Hello</title>\n</head  >\n\n<body>World</body\n\n>\n\n"),
-	"World",
-    "<title>Hello</title>");
+    html_scanner.scan("<head\n>\n<title>Hello</title>\n</head  >\n\n<body>World</body\n\n>\n\n"), '',
+    "<title>Hello</title>",
+	"World");
 
   // head, body, and template
   checkResults(
     html_scanner.scan("<head>\n<title>Hello</title>\n</head>\n\n<body>World</body>\n\n"+
                       '<template name="favoritefood">\n  pizza\n</template>\n'),
-    BODY_PREAMBLE+'Package.handlebars.Handlebars.json_ast_to_func(["World"])'+BODY_POSTAMBLE+
-      TEMPLATE_PREAMBLE+'"favoritefood",Package.handlebars.Handlebars.json_ast_to_func(["pizza"])'+
-      TEMPLATE_POSTAMBLE,
-    "<title>Hello</title>");
+      templatetify("favoritefood","pizza"),
+    "<title>Hello</title>", 'World');
 
   // one-line template
   checkResults(
     html_scanner.scan('<template name="favoritefood">pizza</template>'),
-    TEMPLATE_PREAMBLE+'"favoritefood",Package.handlebars.Handlebars.json_ast_to_func(["pizza"])'+
-      TEMPLATE_POSTAMBLE);
+      templatetify("favoritefood","pizza"));
 
   // template with other attributes
   checkResults(
     html_scanner.scan('<template foo="bar" name="favoritefood" baz="qux">'+
                       'pizza</template>'),
-    TEMPLATE_PREAMBLE+'"favoritefood",Package.handlebars.Handlebars.json_ast_to_func(["pizza"])'+
-      TEMPLATE_POSTAMBLE);
+      templatetify("favoritefood","pizza"));
 
   // whitespace around '=' in attributes and at end of tag
   checkResults(
     html_scanner.scan('<template foo = "bar" name  ="favoritefood" baz= "qux"  >'+
                       'pizza</template\n\n>'),
-    TEMPLATE_PREAMBLE+'"favoritefood",Package.handlebars.Handlebars.json_ast_to_func(["pizza"])'+
-      TEMPLATE_POSTAMBLE);
+      templatetify("favoritefood","pizza"));
 
   // whitespace around template name
   checkResults(
     html_scanner.scan('<template name=" favoritefood  ">pizza</template>'),
-    TEMPLATE_PREAMBLE+'"favoritefood",Package.handlebars.Handlebars.json_ast_to_func(["pizza"])'+
-      TEMPLATE_POSTAMBLE);
+      templatetify("favoritefood","pizza"));
 
   // single quotes around template name
   checkResults(
     html_scanner.scan('<template name=\'the "cool" template\'>'+
                       'pizza</template>'),
-    TEMPLATE_PREAMBLE+'"the \\"cool\\" template",'+
-      'Package.handlebars.Handlebars.json_ast_to_func(["pizza"])'+
-      TEMPLATE_POSTAMBLE);
+      templatetify('the \\"cool\\" template',"pizza"));
 
   // error cases; exact line numbers are not critical, these just reflect
   // the current implementation
