@@ -13,17 +13,17 @@ Package._transitional_registerBuildPlugin({
 Package.on_use(function (api) {
   
   api.add_files(['server.js'], 'server');
-  api.add_files('angular.js', 'client');
+  api.add_files(['angular.js', 'client.js'], 'client');
   api.export(['AngularStack'], 'server');
 });
 
 //I am sure going to test this package.
 Package.on_test(function (api) {
   api.add_files(['server.js'], 'server');
-  api.add_files('angular.js', 'client');
+  api.add_files(['angular.js', 'client.js'], 'client');
   
   api.use(['tinytest', 'test-helpers'], ['client', 'server']);
-  api.add_files('tests/angular_test.js', 'client');
+  api.add_files(['tests/angular_test.js', 'tests/client_test.js'], 'client');
   api.add_files('tests/server_test.js', 'server');
   
   api.add_files([
