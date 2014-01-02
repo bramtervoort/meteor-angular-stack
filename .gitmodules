@@ -1,0 +1,4 @@
+[submodule "packages/angular-stack"]
+	path = packages/angular-stack
+	url = https://github.com/bramtervoort/meteor-angular-stack.git
+	branch = develop
