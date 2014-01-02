@@ -13,14 +13,31 @@ mrt add angular-stack
 
 It will add the ng-app directive to your html you can give this your own namespace using:
 ```
-AngularStack.module = 'myapp';
+if(Meteor.isServer) {
+  AngularStack.module = 'myapp';
+}
 ```
 To disable adding the ng-app directive use:
 ```
-AngularStack.module = false;
+if(Meteor.isServer) {
+  AngularStack.module = false;
+}
 ```
 
-You can't use angular markup in the html files that are in your project.  Becaulse they are
-compiled with handlebars. To use markup place a template in your public folder and include it
-with a ng-include directive. 
+To use the angular template engin instead of the handlebars engin that comes with meteor just give your file the .ahtm extention. The library will properly prosses in. You can use in in combination with the default html templates to do handlebars.
 
+To gain acces to meteor services in angular style add meteor as a dependency to your module. meteor, deps, session and other services can be injected into your controllers as requested. (happy to add more if you miss them please let me know.) 
+
+To make your controller handle reactive data sources (query's, loged in users, ect) wrap them in a deps.autorun:
+```
+var app = angular.module('myapp', ['meteor'];
+
+apps.controller('LoggedInCtrl', ['deps', '$scope', 'meteor', function(deps, $scope, meteor) {
+  deps.autorun(function (comp) {
+    $scope.user = meteor.user();
+    
+    if(!comp.firstRun)
+      $scope.$apply();
+  });
+}]);
+```
