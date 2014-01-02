@@ -11,7 +11,7 @@ Package._transitional_registerBuildPlugin({
 });
 
 Package.on_use(function (api) {
-  api.use('WebApp', ['server', 'client']);
+  api.use('webapp');
   api.add_files(['server.js'], 'server');
   api.add_files(['angular.js', 'client.js'], 'client');
   api.export(['AngularStack'], 'server');
