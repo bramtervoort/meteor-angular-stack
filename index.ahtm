@@ -1,0 +1,31 @@
+
+<body>
+<section class="container" ng-controller="TodoListCtrl">
+<h2>Todo </h2>
+
+<div class="row">
+  <div class="col-lg-5">
+    <ul class="list-group ">
+      <li class="list-group-item" ng-repeat="todo in todos">
+        <span class="glyphicon glyphicon-ok" 
+	          ng-class="{active: todo.done, inactive: !todo.done}"
+		      ng-click="done(todo._id, !todo.done)"> 
+	    </span> 
+	    {{todo.description}} 
+		<a href="" ng-click="remove(todo._id)" class="pull-right">
+	      <span class="glyphicon glyphicon-remove"> </span>
+		</a>
+      </li>
+    </ul>
+    <form class="form-inline " role="form" ng-submit="add()"> 
+      <div class="input-group">
+	    <input type="text" ng-model="description" class="form-control" placeholder="short description"> 
+        <span class="input-group-btn">
+	      <input type="submit" value="+" class="btn btn-default">
+	    </span>
+      </div>
+    </form>
+  </div>
+</div>
+</section>
+</body>

@@ -3,9 +3,7 @@ Todo = new Meteor.Collection('todos');
 
 // server
 if (Meteor.isServer) {
-  WebApp.addHtmlAttributeHook(function (request) {
-    return 'ng-app="todoapp"';
-  });
+  AngularStack.module = 'todoapp';
 }
 
 // client
