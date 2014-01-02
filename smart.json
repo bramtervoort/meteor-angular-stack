@@ -3,6 +3,6 @@
   "description": "Use angular within your meteor project",
   "homepage": "http://bram-tervoort.nl",
   "author": "Bram Tervoort",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "git": "https://github.com/bramtervoort/meteor-angular-stack.git"
 }
