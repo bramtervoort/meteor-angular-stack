@@ -42,10 +42,5 @@ if (Meteor.isClient) {
 	  $scope.description = "";
 	};
 	
-	return {
-	  todos: function () {
-	    return Todo.find().fetch(); 
-      }
-	};
   }]);
 }
