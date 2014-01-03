@@ -9,21 +9,17 @@ if (Meteor.isServer) {
 // client
 if (Meteor.isClient) {
   // the angular module of this app
-  var app = angular.module('todoapp', []);
+  var app = angular.module('todoapp', ['meteor']);
   
   // controller for a list of todo's
-  app.controller('TodoListCtrl', ['$scope', 
+  app.controller('TodoListCtrl', ['$scope',
                          function ($scope) {
 	// a description for a potential todo
 	$scope.description = "";
 	
     // Make sure to keep the list of todo's uptodate
-    Deps.autorun(function (computation) {
-	  $scope.todos = Todo.find().fetch();
-	  
-	  if (!computation.firstRun) {
-	    $scope.$apply();
-	  }
+	$scope.autorun('todos', function () { 
+	  return Todo.find().fetch(); 
 	});
 	
 	// remove a todo from the list
@@ -44,6 +40,12 @@ if (Meteor.isClient) {
 		done: false
       });
 	  $scope.description = "";
+	};
+	
+	return {
+	  todos: function () {
+	    return Todo.find().fetch(); 
+      }
 	};
   }]);
 }
