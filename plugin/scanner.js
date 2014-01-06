@@ -157,15 +157,8 @@ html_scanner = {
       if (! name)
         throwParseError("Template has no 'name' attribute");
 
-      results.js += '<script type="text/ng-template" name=' + JSON.stringify(name) + '>' 
+      results.js += '<script type="text/ng-template" id=' + JSON.stringify(name) + '>' 
         + contents + "</script>";
-    } else {
-      // <body>
-      if (hasAttribs)
-        throwParseError("Attributes on <body> not supported");
-      results.js += "Meteor.startup(function(){" +
-        "document.body.appendChild(Spark.render(" +
-        "Template.__define__(null," + code + ")));});";
-    }
+    } 
   }
 };

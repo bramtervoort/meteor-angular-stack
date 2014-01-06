@@ -23,7 +23,7 @@ Tinytest.add("AngularStack - templating - html scanner", function (test) {
   };
 
   var templatetify = function (name, body) {
-    return '<script type="text/ng-template" name="' + name + '">'
+    return '<script type="text/ng-template" id="' + name + '">'
 	  + body + '</script>';
   };
   var TEMPLATE_PREAMBLE = "Template.__define__(";

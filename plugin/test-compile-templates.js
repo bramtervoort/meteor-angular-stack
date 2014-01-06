@@ -37,7 +37,7 @@ Tinytest.add("AngularStack - templating - ahtm compiler", function (test) {
 	    function (section) {
 		  test.equal(section.section, 'head', 'wrong section');
 		  test.equal(section.data, 
-		   '<script type="text/ng-template" name="test"><h2>hello world</h2></script>'
+		   '<script type="text/ng-template" id="test"><h2>hello world</h2></script>'
 		  , 'wrong content');
 		}
 	  ]);
