@@ -2,10 +2,6 @@ Package.describe({
   summary: "Angular js library."
 });
 
-Npm.depends({
-	'ngmin': '0.4.0'
-});
-
 Package._transitional_registerBuildPlugin({
   name: "loadTemplat",
   sources: [
@@ -15,8 +11,7 @@ Package._transitional_registerBuildPlugin({
 });
 
 Package.on_use(function (api) {
-  api.use(['webapp', 'minifiers']);
-  
+  api.use('webapp');
   api.add_files(['server.js'], 'server');
   api.add_files(['angular.js', 'client.js'], 'client');
   api.export(['AngularStack'], 'server');
@@ -27,7 +22,7 @@ Package.on_test(function (api) {
   api.add_files(['server.js'], 'server');
   api.add_files(['angular.js', 'client.js'], 'client');
   
-  api.use(['tinytest', 'test-helpers', 'minifiers']);
+  api.use(['tinytest', 'test-helpers'], ['client', 'server']);
   api.add_files(['tests/angular_test.js', 'tests/client_test.js'], 'client');
   api.add_files('tests/server_test.js', 'server');
   
